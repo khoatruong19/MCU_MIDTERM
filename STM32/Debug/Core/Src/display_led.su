@@ -1,0 +1,2 @@
+display_led.c:10:6:toggleRedLED	8	static
+display_led.c:14:6:displaySEG7	16	static

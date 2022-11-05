@@ -1,0 +1,77 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+string suffixWithUnit(double number){
+    string units[10] = {"Kilo", "Mega", "Giga", "Tera", "Peta"};
+    int unitIndex = -1 ;
+    int countCharacter = 0;
+    string beforeDot = "";
+    string afterDot = "";
+    
+    //Convert input to string
+    string numberInString = to_string(number);
+
+    //Remove unnecessary 0 characters (to_string problem)
+    numberInString.erase( numberInString.find_last_not_of('0') + 1, string::npos );
+    
+    /*to_string also add additional "." which is kinda annoyed, so afterDot here will check 
+    if we really have decimal numbers by check the length, example: ".xxxx" */
+    
+    afterDot = numberInString.substr(numberInString.find("."), numberInString.length());;
+    
+    //Case: Input has decimal numbers
+    if(afterDot.length() > 1){
+        beforeDot = numberInString.substr(0, numberInString.find("."));
+        
+        for(int i =0; i< beforeDot.length(); i++){
+            if(countCharacter < 3) countCharacter++;
+            else {
+                countCharacter = 1;
+                unitIndex++;
+            }
+        }
+        
+        if(unitIndex != -1) {
+            beforeDot.insert(countCharacter, ".");
+            return beforeDot + afterDot + " " + units[unitIndex];
+    
+        }
+        
+        return beforeDot + afterDot;
+    }
+    
+    //Case: Input has no decimal numbers. Because of the additional ".", we have to remove it by using substr
+    numberInString = numberInString.substr(0, numberInString.find('.'));
+
+    for(int i =0; i< numberInString.length(); i++){
+            if(countCharacter < 3) countCharacter++;
+            else {
+                countCharacter = 1;
+                unitIndex++;
+            }
+        }
+        
+        if(unitIndex != -1) {
+            numberInString.insert(countCharacter, ".");
+            return numberInString + " " + units[unitIndex];
+    
+    }
+    return numberInString;
+}
+
+int main()
+{
+    cout<<suffixWithUnit(1234567233233);
+
+    return 0;
+}

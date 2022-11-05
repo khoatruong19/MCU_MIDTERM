@@ -1,0 +1,2 @@
+global.c:24:6:setValues	4	static
+global.c:29:6:resetCounterTo10	4	static
